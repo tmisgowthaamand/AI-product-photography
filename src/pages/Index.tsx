@@ -22,13 +22,14 @@ const Index = () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await fetchMixedMedia(activeCategory, 1, 20);
+        // Stopped fetching Pexels media
+        // const data = await fetchMixedMedia(activeCategory, 1, 20);
 
         // Add local images to the start of the gallery
         const localImages = [
           {
-            src: "/1.png",
-            highResSrc: "/1.png",
+            src: "/productions/1.png",
+            highResSrc: "/productions/1.png",
             alt: "First Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -40,8 +41,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/2.png",
-            highResSrc: "/2.png",
+            src: "/productions/2.png",
+            highResSrc: "/productions/2.png",
             alt: "Second Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -53,8 +54,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/3.png",
-            highResSrc: "/3.png",
+            src: "/productions/3.png",
+            highResSrc: "/productions/3.png",
             alt: "Third Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -66,8 +67,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/4.png",
-            highResSrc: "/4.png",
+            src: "/productions/4.png",
+            highResSrc: "/productions/4.png",
             alt: "Fourth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -80,7 +81,7 @@ const Index = () => {
           },
           {
             type: "video" as const,
-            src: "/3.png",
+            src: "/productions/3.png",
             videoSrc: "/video/3.mp4",
             alt: "Fifth Frame Production Video",
             photographer: "SIGNAL",
@@ -92,8 +93,8 @@ const Index = () => {
             height: 627
           },
           {
-            src: "/5.png",
-            highResSrc: "/5.png",
+            src: "/productions/5.png",
+            highResSrc: "/productions/5.png",
             alt: "Sixth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -105,8 +106,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/6.png",
-            highResSrc: "/6.png",
+            src: "/productions/6.png",
+            highResSrc: "/productions/6.png",
             alt: "Seventh Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -118,8 +119,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/7.png",
-            highResSrc: "/7.png",
+            src: "/productions/7.png",
+            highResSrc: "/productions/7.png",
             alt: "Eighth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -132,7 +133,7 @@ const Index = () => {
           },
           {
             type: "video" as const,
-            src: "/2.png",
+            src: "/productions/2.png",
             videoSrc: "/video/2.mp4",
             alt: "Ninth Frame Production Video",
             photographer: "SIGNAL",
@@ -145,7 +146,7 @@ const Index = () => {
           },
           {
             type: "video" as const,
-            src: "/9.png",
+            src: "/productions/9.png",
             videoSrc: "/video/9.mp4",
             alt: "Tenth Frame Production Video",
             photographer: "SIGNAL",
@@ -157,8 +158,8 @@ const Index = () => {
             height: 627
           },
           {
-            src: "/9.png",
-            highResSrc: "/9.png",
+            src: "/productions/9.png",
+            highResSrc: "/productions/9.png",
             alt: "Eleventh Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -170,8 +171,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/10.png",
-            highResSrc: "/10.png",
+            src: "/productions/10.png",
+            highResSrc: "/productions/10.png",
             alt: "Twelfth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -183,8 +184,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/11.gif",
-            highResSrc: "/11.gif",
+            src: "/productions/11.gif",
+            highResSrc: "/productions/11.gif",
             alt: "Thirteenth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -196,8 +197,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/12.png",
-            highResSrc: "/12.png",
+            src: "/productions/12.png",
+            highResSrc: "/productions/12.png",
             alt: "Fourteenth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -209,8 +210,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/24.jpeg",
-            highResSrc: "/24.jpeg",
+            src: "/productions/24.jpeg",
+            highResSrc: "/productions/24.jpeg",
             alt: "Fifteenth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -223,7 +224,7 @@ const Index = () => {
           },
           {
             type: "video" as const,
-            src: "/8.png",
+            src: "/productions/8.png",
             videoSrc: "/video/8.mp4",
             alt: "Sixteenth Frame Production Video",
             photographer: "SIGNAL",
@@ -235,8 +236,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/13.png",
-            highResSrc: "/13.png",
+            src: "/productions/13.png",
+            highResSrc: "/productions/13.png",
             alt: "Seventeenth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -249,7 +250,7 @@ const Index = () => {
           },
           {
             type: "video" as const,
-            src: "/1.png",
+            src: "/productions/1.png",
             videoSrc: "/video/1.mp4",
             alt: "Eighteenth Frame Production Video",
             photographer: "SIGNAL",
@@ -261,8 +262,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/14.png",
-            highResSrc: "/14.png",
+            src: "/productions/14.png",
+            highResSrc: "/productions/14.png",
             alt: "Nineteenth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
@@ -274,8 +275,8 @@ const Index = () => {
             height: 650
           },
           {
-            src: "/25.jpeg",
-            highResSrc: "/25.jpeg",
+            src: "/productions/25.jpeg",
+            highResSrc: "/productions/25.jpeg",
             alt: "Twentieth Frame Production",
             photographer: "SIGNAL",
             client: "STUDIO",
