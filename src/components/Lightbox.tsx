@@ -18,8 +18,30 @@ interface LightboxProps {
 const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isTouch, setIsTouch] = useState(false);
+  const touchStartX = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
+
+  useEffect(() => {
+    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const delta = touchStartX.current - touchEndX;
+
+    if (Math.abs(delta) > 50) {
+      if (delta > 0) handleNext();
+      else handlePrevious();
+    }
+    touchStartX.current = null;
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -52,6 +74,7 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return; // Use swiping for touch
     if (!imageRef.current) return;
 
     const imageRect = imageRef.current.getBoundingClientRect();
@@ -74,7 +97,7 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!imageRef.current) return;
+    if (isTouch || !imageRef.current) return;
 
     const imageRect = imageRef.current.getBoundingClientRect();
     const mouseX = e.clientX;
@@ -99,8 +122,10 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-background z-[100] flex items-center justify-center animate-fade-in"
+      className="fixed inset-0 bg-background z-[100] flex flex-col items-center justify-center animate-fade-in touch-none"
       onMouseMove={handleMouseMove}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Back Button - Top Left */}
       <button
@@ -108,7 +133,7 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
         className="fixed top-0 left-0 w-16 h-16 md:w-[6em] md:h-[6em] z-[200] flex items-center justify-center opacity-30 hover:opacity-100 transition-opacity"
         aria-label="Close lightbox"
       >
-        <svg viewBox="0 0 60.08 60.08" className="absolute left-6 top-6 md:left-[2.4em] md:top-[2.4em] w-6 h-6 md:w-[1.8em] md:h-[1.8em]">
+        <svg viewBox="0 0 60.08 60.08" className="absolute left-6 top-6 md:left-[2.4em] md:top-[2.4em] w-5 h-5 md:w-[1.8em] md:h-[1.8em]">
           <path
             d="M25.64,58.83L2.56,30.04,25.64,1.25"
             fill="none"
@@ -120,27 +145,33 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
         </svg>
       </button>
 
-      {/* Page Indicator Near Cursor */}
-      <div
-        className="fixed z-[102] text-foreground/60 text-sm font-inter tracking-wide pointer-events-none"
-        style={{
-          left: `${cursorPos.x + 20}px`,
-          top: `${cursorPos.y + 20}px`
-        }}
-      >
-        {currentIndex + 1} of {images.length}
-      </div>
+      {/* Page Indicator - Top Right on Mobile, Cursor following on Desktop */}
+      {!isTouch ? (
+        <div
+          className="fixed z-[102] text-foreground/60 text-[10px] md:text-sm font-inter tracking-wide pointer-events-none"
+          style={{
+            left: `${cursorPos.x + 20}px`,
+            top: `${cursorPos.y + 20}px`
+          }}
+        >
+          {currentIndex + 1} / {images.length}
+        </div>
+      ) : (
+        <div className="fixed top-8 right-8 z-[102] text-foreground/40 text-[10px] uppercase tracking-widest font-inter">
+          {currentIndex + 1} of {images.length}
+        </div>
+      )}
 
       {/* Museum-style Project Details - Bottom Left */}
-      <div className="fixed bottom-8 left-8 z-[101] text-foreground/60 text-xs font-inter leading-relaxed max-w-xs pointer-events-none">
+      <div className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-[101] text-foreground/60 text-[9px] md:text-xs font-inter leading-relaxed max-w-[70%] md:max-w-xs pointer-events-none opacity-80 md:opacity-100">
         {currentImage.photographer && (
-          <div className="mb-1">{currentImage.photographer}</div>
+          <div className="mb-0.5 md:mb-1">{currentImage.photographer}</div>
         )}
         {currentImage.client && (
-          <div className="mb-1">For {currentImage.client}</div>
+          <div className="mb-0.5 md:mb-1 uppercase tracking-tighter md:tracking-normal">For {currentImage.client}</div>
         )}
         {currentImage.location && currentImage.details && (
-          <div className="text-foreground/40">
+          <div className="text-foreground/40 hidden md:block">
             Shot in {currentImage.location}. {currentImage.details}.
           </div>
         )}
@@ -149,7 +180,7 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
       {/* Image Container */}
       <div
         ref={containerRef}
-        className="relative w-full h-full flex items-center justify-center px-[10%]"
+        className="relative w-full h-full flex items-center justify-center p-4 md:px-[10%]"
         onClick={handleClick}
       >
         {currentImage.type === "video" ? (
@@ -161,15 +192,15 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
             muted
             loop
             playsInline
-            controls
-            className="max-w-full max-h-[85vh] object-contain transition-opacity duration-300 pointer-events-auto"
+            controls={isTouch}
+            className="max-w-full max-h-[75vh] md:max-h-[85vh] object-contain transition-opacity duration-300 pointer-events-auto"
           />
         ) : (
           <img
             ref={imageRef as React.RefObject<HTMLImageElement>}
             src={currentImage.src}
             alt={currentImage.alt}
-            className="max-w-full max-h-[85vh] object-contain transition-opacity duration-300 pointer-events-none"
+            className="max-w-full max-h-[75vh] md:max-h-[85vh] object-contain transition-opacity duration-300 pointer-events-none"
           />
         )}
       </div>

@@ -79,8 +79,8 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
               onMouseEnter={() => setHoveredItem(category)}
               onMouseLeave={() => setHoveredItem(null)}
               className={`text-[10px] md:text-[11px] uppercase tracking-widest font-inter transition-colors whitespace-nowrap ${activeCategory === category
-                  ? "text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground/80"
+                ? "text-foreground font-medium"
+                : "text-muted-foreground hover:text-foreground/80"
                 }`}
             >
               {hoveredItem === category ? (
@@ -138,8 +138,8 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
                     to={category === "SELECTED" ? "/" : `/category/${category.toLowerCase()}`}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`text-lg uppercase tracking-widest font-inter transition-colors ${activeCategory === category
-                        ? "text-foreground font-medium"
-                        : "text-muted-foreground"
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground"
                       }`}
                   >
                     {category}

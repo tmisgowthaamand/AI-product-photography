@@ -91,22 +91,22 @@ const About = () => {
       <PortfolioHeader
         activeCategory=""
       />
-      
+
       <main className="min-h-screen">
-        <section className="max-w-[1600px] mx-auto pt-20 pb-12 md:pt-24 md:pb-16">
-          <div className="text-center space-y-8 mb-16 px-3 md:px-5 max-w-2xl mx-auto">
-            <div className="space-y-4">
-              <h1 className="font-playfair text-4xl md:text-5xl text-foreground">
+        <section className="max-w-[1600px] mx-auto pt-24 pb-12 md:pt-32 md:pb-16 px-4 md:px-8">
+          <div className="text-center space-y-6 md:space-y-8 mb-12 md:mb-16 max-w-2xl mx-auto">
+            <div className="space-y-3 md:space-y-4">
+              <h1 className="font-playfair text-3xl md:text-5xl text-foreground">
                 SIGNAL
               </h1>
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
-                AI PRODUCT PHOTOGRAPHY & CREATIVE STUDIO
+              <p className="text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
+                FOUNDER & CREATIVE DIRECTOR: GOWTHAAMAN D
               </p>
             </div>
 
             {/* Portrait */}
             {!loading && portrait && (
-              <div className="max-w-xs mx-auto border border-foreground/10 overflow-hidden">
+              <div className="max-w-[240px] md:max-w-xs mx-auto border border-foreground/10 overflow-hidden shadow-sm">
                 <picture className="relative block">
                   {portrait.width && portrait.height && (
                     <svg
@@ -125,7 +125,7 @@ const About = () => {
                   <img
                     src={portrait.src}
                     alt={portrait.alt}
-                    className="absolute top-0 left-0 w-full h-auto grayscale"
+                    className="absolute top-0 left-0 w-full h-auto grayscale hover:grayscale-0 transition-all duration-700"
                     style={{
                       opacity: loading ? 0 : 1,
                       transition: 'opacity 0.5s ease-out'
@@ -134,68 +134,73 @@ const About = () => {
                 </picture>
               </div>
             )}
+
+            <div className="pt-4 space-y-2">
+              <p className="text-xs md:text-sm font-inter text-foreground uppercase tracking-widest break-all px-4">
+                <a href="mailto:gowthaamankrishna1998@gmail.com" className="hover:text-muted-foreground transition-colors">
+                  gowthaamankrishna1998@gmail.com
+                </a>
+              </p>
+              <p className="text-[10px] md:text-xs font-inter text-muted-foreground tracking-wider">
+                <a href="tel:+918903162114" className="hover:text-foreground transition-colors">
+                  +91 8903162114
+                </a>
+              </p>
+            </div>
           </div>
 
           {/* Bio Section */}
-          <div className="max-w-2xl mx-auto px-3 md:px-5 space-y-8 text-center text-foreground/80 text-sm leading-relaxed mb-16">
+          <div className="max-w-xl md:max-w-2xl mx-auto px-4 md:px-5 space-y-6 md:space-y-8 text-center text-foreground/80 text-[13px] md:text-sm leading-relaxed mb-16">
             <p>
-              AI product photography and creative studio specializing in synthetic product imagery and visual production.
-              Creating controlled commercial imagery without physical constraints for modern brands and publications.
+              Creative Director and AI specialist focusing on premium synthetic product imagery.
+              Based in India, Gowthaaman D blends technical innovation with a refined editorial aesthetic to create controlled commercial visuals for modern brands.
             </p>
 
             <p>
-              Full creative direction and production services including concept development, visual strategy, and controlled environment creation.
-              Collaborative approach ensuring seamless execution from creative direction to final delivery.
+              Specializing in the intersection of traditional studio principles and advanced AI production,
+              delivering high-end visual strategies that push the boundaries of product storytelling.
             </p>
 
-            <div className="pt-8">
-              <h2 className="font-playfair text-xl text-foreground mb-4">Services</h2>
-              <p className="text-foreground/70 text-xs uppercase tracking-wider leading-loose">
-                AI Product Photography / Synthetic Product Imagery / Creative Direction /
-                Visual Production / Commercial Imagery / Controlled Environments
-              </p>
-            </div>
-
-            <div className="pt-4">
-              <h2 className="font-playfair text-xl text-foreground mb-4">Select Clients</h2>
-              <p className="text-foreground/70 text-xs uppercase tracking-wider leading-loose">
-                Modern brands and commercial enterprises
+            <div className="pt-6 md:pt-8 text-center">
+              <h2 className="font-playfair text-lg md:text-xl text-foreground mb-3 md:mb-4 uppercase tracking-tight">Direct Contact</h2>
+              <p className="text-foreground/70 text-[10px] md:text-xs uppercase tracking-wider leading-loose">
+                Instagram / LinkedIn / Twitter / WhatsApp
               </p>
             </div>
           </div>
 
           {/* Contact Form Section */}
-          <div className="max-w-xl mx-auto px-3 md:px-5 pt-16">
-            <div className="text-center space-y-4 mb-12">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
+          <div className="max-w-xl mx-auto px-4 md:px-5 pt-8 md:pt-16 border-t border-foreground/5">
+            <div className="text-center space-y-3 md:space-y-4 mb-10 md:mb-12">
+              <p className="text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
                 INQUIRIES
               </p>
-              <h2 className="font-playfair text-4xl md:text-5xl text-foreground">
-                Contact
+              <h2 className="font-playfair text-3xl md:text-5xl text-foreground">
+                Inquiry
               </h2>
-              <p className="text-foreground/80 text-sm leading-relaxed">
-                For commercial inquiries and project discussions.
+              <p className="text-foreground/80 text-[13px] md:text-sm leading-relaxed">
+                For commercial collaborations and project discussions.
               </p>
             </div>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 md:space-y-8">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm uppercase tracking-wider text-foreground/70 font-inter">
+                      <FormLabel className="text-[10px] md:text-xs uppercase tracking-wider text-foreground/70 font-inter">
                         Name *
                       </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Your name"
-                          className="border-0 border-b border-foreground/20 rounded-none bg-transparent text-foreground px-0 focus-visible:ring-0 focus-visible:border-foreground transition-colors"
+                          className="border-0 border-b border-foreground/20 rounded-none bg-transparent text-foreground px-0 focus-visible:ring-0 focus-visible:border-foreground transition-colors h-8 md:h-10 text-sm"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )}
                 />
@@ -205,18 +210,18 @@ const About = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm uppercase tracking-wider text-foreground/70 font-inter">
+                      <FormLabel className="text-[10px] md:text-xs uppercase tracking-wider text-foreground/70 font-inter">
                         Email *
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="email"
                           placeholder="your@email.com"
-                          className="border-0 border-b border-foreground/20 rounded-none bg-transparent text-foreground px-0 focus-visible:ring-0 focus-visible:border-foreground transition-colors"
+                          className="border-0 border-b border-foreground/20 rounded-none bg-transparent text-foreground px-0 focus-visible:ring-0 focus-visible:border-foreground transition-colors h-8 md:h-10 text-sm"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )}
                 />
@@ -226,17 +231,17 @@ const About = () => {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm uppercase tracking-wider text-foreground/70 font-inter">
+                      <FormLabel className="text-[10px] md:text-xs uppercase tracking-wider text-foreground/70 font-inter">
                         Message *
                       </FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Discuss your project..."
-                          className="border-0 border-b border-foreground/20 rounded-none bg-transparent text-foreground min-h-[150px] px-0 focus-visible:ring-0 focus-visible:border-foreground transition-colors resize-none"
+                          className="border-0 border-b border-foreground/20 rounded-none bg-transparent text-foreground min-h-[100px] md:min-h-[150px] px-0 focus-visible:ring-0 focus-visible:border-foreground transition-colors resize-none text-sm"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )}
                 />
@@ -246,7 +251,7 @@ const About = () => {
                     type="submit"
                     disabled={isSubmitting}
                     variant="outline"
-                    className="w-full md:w-auto px-12 py-6 text-sm uppercase tracking-widest font-inter border-foreground/40 hover:bg-foreground hover:text-background transition-all"
+                    className="w-full md:w-auto px-10 md:px-12 py-5 md:py-6 text-[10px] md:text-xs uppercase tracking-widest font-inter border-foreground/40 hover:bg-foreground hover:text-background transition-all"
                   >
                     {isSubmitting ? "Sending..." : "Start a Production"}
                   </Button>

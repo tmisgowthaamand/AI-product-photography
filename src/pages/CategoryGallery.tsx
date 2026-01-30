@@ -80,6 +80,7 @@ const CategoryGallery = () => {
 
           setImages(items as any[]);
         } else if (categoryUpper === 'EDITORIAL') {
+        } else if (categoryUpper === 'EDITORIAL') {
           const editorialLocalAssets = [
             { pos: 1, src: "/productions/19.png", width: 434, height: 650 },
             { pos: 3, src: "/productions/20.png", width: 434, height: 650 },
@@ -107,26 +108,27 @@ const CategoryGallery = () => {
             { pos: 37, src: "/productions/47.jpeg", width: 433, height: 650 },
           ];
 
-          const items = [...data.items];
-          editorialLocalAssets.forEach(asset => {
-            const item = {
-              src: asset.src,
-              highResSrc: asset.src,
-              videoSrc: asset.videoSrc,
-              alt: "AI Product Photography",
+          const items = Array.from({ length: 40 }, (_, i) => {
+            const pos = i + 1;
+            const asset = editorialLocalAssets.find(a => a.pos === pos);
+
+            return {
+              src: asset?.src || "/placeholder.svg",
+              highResSrc: asset?.src || "/placeholder.svg",
+              videoSrc: asset?.videoSrc,
+              alt: "AI Product Production",
               photographer: "SIGNAL",
               client: "STUDIO",
               location: "London",
-              details: asset.videoSrc ? "AI Product Video" : "AI Product Photography",
-              type: asset.type || ("image" as const),
-              forceShow: true,
-              width: asset.width,
-              height: asset.height
+              details: asset?.videoSrc ? "AI Product Video" : "AI Product Photography",
+              type: asset?.type || ("image" as const),
+              forceShow: !!asset,
+              width: asset?.width || 433,
+              height: asset?.height || 650
             };
-            items.splice(asset.pos - 1, 0, item);
           });
 
-          setImages(items);
+          setImages(items as any[]);
         } else if (categoryUpper === 'PERSONAL') {
           const personalLocalAssets = [
             { pos: 1, type: "video" as const, src: "/productions/13.png", videoSrc: "/video/13.mp4", width: 940, height: 627 },

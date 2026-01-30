@@ -31,6 +31,16 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Determine row height based on screen size
+  const rowHeight = windowWidth < 640 ? 180 : windowWidth < 1024 ? 220 : 270;
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
@@ -196,23 +206,33 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
                 onClick={() => onImageClick(index)}
                 onMouseEnter={() => handleImageHover(index)}
                 onMouseLeave={handleImageLeave}
-                className="relative cursor-pointer gallery-image inline-block align-top p-[3px] md:p-1 lg:p-1.5"
-                style={{ height: "270px" }}
+                className="relative cursor-pointer gallery-image inline-block align-top p-1"
+                style={{ height: `${rowHeight}px` }}
               >
                 <div
-                  className="relative h-full overflow-hidden transition-all duration-300 hover:border-gray-400"
+                  className="relative h-full overflow-hidden transition-all duration-300 hover:border-gray-400 flex flex-col items-center justify-center p-4 text-center group"
                   style={{
-                    width: `${(frameDimensions.width / frameDimensions.height) * 270}px`,
+                    width: `${(frameDimensions.width / frameDimensions.height) * rowHeight}px`,
+                    maxWidth: '100%',
                     border: '1px solid #e5e5e5',
                     backgroundColor: 'transparent'
                   }}
                 >
-                  {/* Empty frame - no image content */}
+                  <div className="flex flex-col items-center gap-1.5 opacity-30 group-hover:opacity-60 transition-opacity duration-300">
+                    <span className="text-[9px] uppercase tracking-[0.3em] font-medium text-foreground">
+                      COMING SOON
+                    </span>
+                    <span className="text-[10px] font-playfair uppercase tracking-[0.15em] text-foreground/80 italic">
+                      I'M IN EDITIES TABLES
+                    </span>
+                  </div>
+
+                  {/* Empty frame - maintains aspect ratio */}
                   <svg
                     width={frameDimensions.width}
                     height={frameDimensions.height}
                     viewBox={`0 0 ${frameDimensions.width} ${frameDimensions.height}`}
-                    className="h-full w-auto"
+                    className="absolute inset-0 h-full w-full pointer-events-none"
                   >
                     <rect
                       width={frameDimensions.width}
@@ -231,10 +251,16 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
               onClick={() => onImageClick(index)}
               onMouseEnter={() => handleImageHover(index)}
               onMouseLeave={handleImageLeave}
-              className="relative cursor-zoom-in gallery-image inline-block align-top p-[3px] md:p-1 lg:p-1.5"
-              style={{ height: "270px" }}
+              className="relative cursor-zoom-in gallery-image inline-block align-top p-1"
+              style={{ height: `${rowHeight}px` }}
             >
-              <div className="relative h-full overflow-hidden">
+              <div
+                className="relative h-full overflow-hidden"
+                style={{
+                  width: `${(frameDimensions.width / frameDimensions.height) * rowHeight}px`,
+                  maxWidth: '100%'
+                }}
+              >
                 {image.type === "video" ? (
                   // Video element with thumbnail poster
                   <div className="relative h-full w-auto inline-block">
