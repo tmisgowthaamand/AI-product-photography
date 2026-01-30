@@ -73,12 +73,12 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
       if ([1, 3, 6, 12, 13, 17, 18].includes(displayIndex)) {
         return { width: 940, height: 627 };
       }
-      // 433 × 650 px: 2, 4, 8, 14, 16
-      if ([2, 4, 8, 14, 16].includes(displayIndex)) {
+      // 433 × 650 px: 2, 4, 5, 8, 14, 16
+      if ([2, 4, 5, 8, 14, 16].includes(displayIndex)) {
         return { width: 433, height: 650 };
       }
-      // 630 × 1200 px: 5, 10, 11
-      if ([5, 10, 11].includes(displayIndex)) {
+      // 630 × 1200 px: 10, 11
+      if ([10, 11].includes(displayIndex)) {
         return { width: 630, height: 1200 };
       }
       // 366 × 650 px: 7

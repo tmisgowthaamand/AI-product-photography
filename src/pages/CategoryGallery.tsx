@@ -42,40 +42,43 @@ const CategoryGallery = () => {
 
         // For commissioned category, insert local images at specific positions
         if (categoryUpper === 'COMMISSIONED') {
-          const commissionedItems = [
-            { src: "/productions/24.jpeg", width: 940, height: 627 }, // 1
-            { type: "video" as const, src: "/productions/11.gif", videoSrc: "/video/11.mp4", width: 433, height: 650 },  // 2
-            { type: "video" as const, src: "/productions/1.png", videoSrc: "/video/1.mp4", width: 940, height: 627 }, // 3
-            { src: "/productions/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png", width: 433, height: 650 },  // 4
-            { src: "/productions/4.png", width: 630, height: 1200 },  // 5
-            { src: "/productions/25.jpeg", width: 940, height: 627 }, // 6
-            { src: "/productions/7.png", width: 366, height: 650 },   // 7
-            { src: "/productions/15.png", width: 433, height: 650 },  // 8
-            { src: "/productions/16.webp", width: 454, height: 650 }, // 9
-            { type: "video" as const, src: "/productions/2.png", videoSrc: "/video/2.mp4", width: 630, height: 1200 }, // 10
-            { src: "/productions/5.png", width: 630, height: 1200 },  // 11
-            { src: "/productions/26.jpeg", width: 940, height: 627 }, // 12
-            { type: "video" as const, src: "/productions/3.png", videoSrc: "/video/3.mp4", width: 940, height: 627 }, // 13
-            { src: "/productions/17.png", width: 433, height: 650 },  // 14
-            { src: "/productions/27.jpeg", width: 1200, height: 630 }, // 15
-            { src: "/productions/18.png", width: 433, height: 650 },  // 16
-            { src: "/productions/28.jpeg", width: 940, height: 627 }, // 17
-            { src: "/productions/29.jpeg", width: 940, height: 627 }, // 18
-            { src: "/productions/30.jpeg", width: 867, height: 650 }, // 19
-            { src: "/productions/31.jpeg", width: 1200, height: 630 } // 20
-          ].map((item, index) => ({
-            ...item,
-            highResSrc: item.src,
-            alt: "AI Product Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: item.type || ("image" as const),
-            forceShow: ![2, 11, 12, 14, 16, 17, 18, 19].includes(index)
-          }));
+          const commissionedLocalAssets = [
+            { pos: 1, src: "/productions/51.jpeg", width: 940, height: 627 },
+            { pos: 2, type: "video" as const, src: "/productions/11.gif", videoSrc: "/video/11.mp4", width: 433, height: 650 },
+            { pos: 3, type: "video" as const, src: "/productions/17.png", videoSrc: "/video/17.mp4", width: 940, height: 627 },
+            { pos: 4, src: "/productions/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png", width: 433, height: 650 },
+            { pos: 6, src: "/productions/52.jpeg", width: 940, height: 627 },
+            { pos: 7, src: "/productions/7.png", width: 366, height: 650 },
+            { pos: 8, src: "/productions/15.png", width: 433, height: 650 },
+            { pos: 9, src: "/productions/16.webp", width: 454, height: 650 },
+            { pos: 11, type: "video" as const, src: "/productions/15.png", videoSrc: "/video/15.mp4", width: 630, height: 1200 },
+            { pos: 12, src: "/productions/53.jpeg", width: 940, height: 627 },
+            { pos: 14, src: "/productions/49.jpeg", width: 433, height: 650 },
+            { pos: 16, src: "/productions/50.jpeg", width: 433, height: 650 },
+            { pos: 17, src: "/productions/54.jpeg", width: 940, height: 627 }
+          ];
 
-          setImages(commissionedItems as any[]);
+          const items = Array.from({ length: 20 }, (_, i) => {
+            const pos = i + 1;
+            const asset = commissionedLocalAssets.find(a => a.pos === pos);
+
+            return {
+              src: asset?.src || "/placeholder.svg",
+              highResSrc: asset?.src || "/placeholder.svg",
+              videoSrc: asset?.videoSrc,
+              alt: "AI Product Production",
+              photographer: "SIGNAL",
+              client: "STUDIO",
+              location: "London",
+              details: asset?.videoSrc ? "AI Product Video" : "AI Product Photography",
+              type: asset?.type || ("image" as const),
+              forceShow: !!asset,
+              width: asset?.width || 433,
+              height: asset?.height || 650
+            };
+          });
+
+          setImages(items as any[]);
         } else if (categoryUpper === 'EDITORIAL') {
           const editorialLocalAssets = [
             { pos: 1, src: "/productions/19.png", width: 434, height: 650 },
@@ -129,6 +132,9 @@ const CategoryGallery = () => {
             { pos: 1, type: "video" as const, src: "/productions/13.png", videoSrc: "/video/13.mp4", width: 940, height: 627 },
             { pos: 2, src: "/productions/48.jpeg", width: 433, height: 650 },
             { pos: 3, type: "video" as const, src: "/productions/14.png", videoSrc: "/video/14.mp4", width: 940, height: 627 },
+            { pos: 4, type: "video" as const, src: "/productions/19.png", videoSrc: "/video/19.mp4", width: 433, height: 650 },
+            { pos: 6, type: "video" as const, src: "/productions/20.png", videoSrc: "/video/20.mp4", width: 433, height: 650 },
+            { pos: 8, src: "/productions/55.jpeg", width: 433, height: 650 },
           ];
 
           // Generate 20 units for the Personal gallery
