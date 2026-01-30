@@ -37,7 +37,144 @@ const CategoryGallery = () => {
         setLoading(true);
         setError(null);
         const data = await fetchMixedMedia(categoryUpper, page, 20);
-        setImages(data.items);
+
+        // For commissioned category, insert local images at specific positions
+        if (categoryUpper === 'COMMISSIONED') {
+          const localImage13 = {
+            src: "/13.png",
+            highResSrc: "/13.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const localImage14 = {
+            src: "/14.png",
+            highResSrc: "/14.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const localImage15 = {
+            src: "/15.png",
+            highResSrc: "/15.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const localImage16 = {
+            src: "/16.webp",
+            highResSrc: "/16.webp",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const localImage17 = {
+            src: "/17.png",
+            highResSrc: "/17.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const localImage18 = {
+            src: "/18.png",
+            highResSrc: "/18.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const items = [...data.items];
+          items.splice(1, 0, localImage13); // Insert 13.png at index 1 (position 2)
+          items.splice(3, 0, localImage14); // Insert 14.png at index 3 (position 4)
+          items.splice(7, 0, localImage15); // Insert 15.png at index 7 (position 8)
+          items.splice(8, 0, localImage16); // Insert 16.webp at index 8 (position 9)
+          items.splice(13, 0, localImage17); // Insert 17.png at index 13 (position 14)
+          items.splice(15, 0, localImage18); // Insert 18.png at index 15 (position 16)
+          setImages(items);
+        } else if (categoryUpper === 'EDITORIAL') {
+          // For editorial category, insert local images at specific positions
+          const localImage19 = {
+            src: "/19.png",
+            highResSrc: "/19.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 434,
+            height: 650
+          };
+          const localImage20 = {
+            src: "/20.png",
+            highResSrc: "/20.png",
+            alt: "AI Product Photography",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 434,
+            height: 650
+          };
+          const localImageLuxury = {
+            src: "/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png",
+            highResSrc: "/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png",
+            alt: "Luxury Editorial Model",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Photography",
+            type: "image" as const,
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const items = [...data.items];
+          items.splice(0, 0, localImage19); // Insert 19.png at index 0 (position 1)
+          items.splice(2, 0, localImage20); // Insert 20.png at index 2 (position 3)
+          items.splice(3, 0, localImageLuxury); // Insert luxury model at index 3 (position 4)
+          setImages(items);
+        } else {
+          setImages(data.items);
+        }
       } catch (err) {
         console.error('Error fetching Pexels media:', err);
         setError('Failed to load images. Please try again later.');

@@ -145,8 +145,8 @@ const Index = () => {
           },
           {
             type: "video" as const,
-            src: "/3.png",
-            videoSrc: "/video/3.mp4",
+            src: "/9.png",
+            videoSrc: "/video/9.mp4",
             alt: "Tenth Frame Production Video",
             photographer: "SIGNAL",
             client: "STUDIO",
