@@ -222,8 +222,8 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
                     <span className="text-[9px] uppercase tracking-[0.3em] font-medium text-foreground">
                       COMING SOON
                     </span>
-                    <span className="text-[10px] font-playfair uppercase tracking-[0.2em] text-foreground/80 italic">
-                      TABLES
+                    <span className="text-[10px] font-playfair uppercase tracking-[0.15em] text-foreground/80 italic">
+                      I'M IN EDITING TABLE
                     </span>
                   </div>
 
