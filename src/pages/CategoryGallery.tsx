@@ -127,6 +127,7 @@ const CategoryGallery = () => {
         } else if (categoryUpper === 'PERSONAL') {
           const personalLocalAssets = [
             { pos: 1, type: "video" as const, src: "/productions/13.png", videoSrc: "/video/13.mp4", width: 940, height: 627 },
+            { pos: 2, src: "/productions/48.jpeg", width: 433, height: 650 },
             { pos: 3, type: "video" as const, src: "/productions/14.png", videoSrc: "/video/14.mp4", width: 940, height: 627 },
           ];
 
