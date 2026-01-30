@@ -154,10 +154,10 @@ const CategoryGallery = () => {
             width: 434,
             height: 650
           };
-          const localImageLuxury = {
-            src: "/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png",
-            highResSrc: "/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png",
-            alt: "Luxury Editorial Model",
+          const localImage27 = {
+            src: "/27.jpeg",
+            highResSrc: "/27.jpeg",
+            alt: "AI Product Photography",
             photographer: "SIGNAL",
             client: "STUDIO",
             location: "London",
@@ -167,10 +167,38 @@ const CategoryGallery = () => {
             width: 433,
             height: 650
           };
+          const localVideo5 = {
+            type: "video" as const,
+            src: "/5.png",
+            videoSrc: "/video/5.mp4",
+            alt: "AI Product Video",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Video",
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
+          const localVideo6 = {
+            type: "video" as const,
+            src: "/6.png",
+            videoSrc: "/video/6.mp4",
+            alt: "AI Product Video",
+            photographer: "SIGNAL",
+            client: "STUDIO",
+            location: "London",
+            details: "AI Product Video",
+            forceShow: true,
+            width: 433,
+            height: 650
+          };
           const items = [...data.items];
           items.splice(0, 0, localImage19); // Insert 19.png at index 0 (position 1)
           items.splice(2, 0, localImage20); // Insert 20.png at index 2 (position 3)
-          items.splice(3, 0, localImageLuxury); // Insert luxury model at index 3 (position 4)
+          items.splice(3, 0, localImage27); // Insert 27.jpeg at index 3 (position 4)
+          items.splice(6, 0, localVideo5); // Insert 5.mp4 at index 6 (position 7)
+          items.splice(8, 0, localVideo6); // Insert 6.mp4 at index 8 (position 9)
           setImages(items);
         } else {
           setImages(data.items);
