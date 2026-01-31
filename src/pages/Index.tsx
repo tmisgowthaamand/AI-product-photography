@@ -26,268 +26,48 @@ const Index = () => {
         // const data = await fetchMixedMedia(activeCategory, 1, 20);
 
         // Add local images to the start of the gallery
-        const localImages = [
-          {
-            src: "/productions/1.png",
-            highResSrc: "/productions/1.png",
-            alt: "First Frame Production",
+        const assetMap: Record<number, any> = {
+          1: { src: "/productions/1.png", details: "ARTISAN TAILOR", client: "SIGNAL STUDIO" },
+          2: { src: "/productions/2.png", details: "SILK TEXTURE STUDY", client: "HERITAGE SAREE" },
+          3: { src: "/productions/3.png", details: "CINEMATIC HOUSE", client: "ARCHITECTURE SERIES" },
+          4: { src: "/productions/4.png", details: "SUSTAINABLE FORM", client: "ECO DESIGN" },
+          5: { type: "video", src: "/productions/3.png", videoSrc: "/video/3.mp4", details: "DYNAMIC SNACK MOTION", client: "FLAVOR HOUSE" },
+          6: { src: "/productions/5.png", details: "WELLNESS SERIES", client: "FEEL NUTRITION" },
+          7: { src: "/productions/6.png", details: "HANDMADE COOKIES", client: "BAKED BY HEART" },
+          8: { src: "/productions/15.png", details: "ARTISTIC NARRATIVE", client: "CREATE NOT HATE" },
+          9: { type: "video", src: "/productions/7.png", videoSrc: "/video/1.mp4", details: "LIQUID MOTION", client: "BEVERAGE CO" },
+          10: { type: "video", src: "/productions/9.png", videoSrc: "/video/9.mp4", details: "PRECISION WATCH", client: "LUXURY TIMEPIECE" },
+          11: { src: "/productions/8.png", details: "LUXURY MECHANICS", client: "PRECISION WATCH" },
+          12: { src: "/productions/9.png", details: "BREAKFAST STUDY", client: "KITCHEN TABLE" },
+          13: { src: "/productions/10.png", details: "LEVITATION STUDY", client: "SUSHI ART" },
+          14: { src: "/productions/11.gif", details: "SILK TEXTURE STUDY", client: "HERITAGE SAREE" },
+          15: { src: "/productions/24.jpeg", details: "RISHIKESH TALES CINEMA", client: "TRAVELERS JOURNAL" },
+          16: { src: "/productions/12.png", details: "CONFECTIONARY MACRO", client: "SWEET BOUTIQUE" },
+          17: { src: "/productions/13.png", details: "NATURE ELEMENTS", client: "SOLARIS" },
+          18: { type: "video", src: "/productions/32.jpeg", videoSrc: "/video/5.mp4", details: "JEWELRY MOTION", client: "FINE JEWELRY" },
+          19: { type: "video", src: "/productions/14.png", videoSrc: "/video/2.mp4", details: "FOOD MOTION", client: "CULINARY REVIEW" },
+          20: { src: "/productions/25.jpeg", details: "GEMSTONE BEAD BRACELET", client: "ZEN GALLERY" }
+        };
+
+        const localImages = Array.from({ length: 20 }, (_, i) => {
+          const pos = i + 1;
+          const isLandscape = [5, 10, 15, 20].includes(pos);
+          const mappedAsset = assetMap[pos];
+
+          return {
+            src: mappedAsset?.src || "",
+            videoSrc: mappedAsset?.videoSrc,
+            alt: mappedAsset?.details || `Frame ${pos}`,
             photographer: "SIGNAL",
-            client: "STUDIO",
+            client: mappedAsset?.client || "STUDIO",
             location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/2.png",
-            highResSrc: "/productions/2.png",
-            alt: "Second Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/3.png",
-            highResSrc: "/productions/3.png",
-            alt: "Third Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/4.png",
-            highResSrc: "/productions/4.png",
-            alt: "Fourth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            type: "video" as const,
-            src: "/productions/3.png",
-            videoSrc: "/video/3.mp4",
-            alt: "Fifth Frame Production Video",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Video",
-            forceShow: true,
-            width: 940,
-            height: 627
-          },
-          {
-            src: "/productions/5.png",
-            highResSrc: "/productions/5.png",
-            alt: "Sixth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 434,
-            height: 650
-          },
-          {
-            src: "/productions/6.png",
-            highResSrc: "/productions/6.png",
-            alt: "Seventh Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 432,
-            height: 650
-          },
-          {
-            src: "/productions/7.png",
-            highResSrc: "/productions/7.png",
-            alt: "Eighth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            type: "video" as const,
-            src: "/productions/2.png",
-            videoSrc: "/video/2.mp4",
-            alt: "Ninth Frame Production Video",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Video",
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            type: "video" as const,
-            src: "/productions/9.png",
-            videoSrc: "/video/9.mp4",
-            alt: "Tenth Frame Production Video",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Video",
-            forceShow: true,
-            width: 940,
-            height: 627
-          },
-          {
-            src: "/productions/9.png",
-            highResSrc: "/productions/9.png",
-            alt: "Eleventh Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/10.png",
-            highResSrc: "/productions/10.png",
-            alt: "Twelfth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/11.gif",
-            highResSrc: "/productions/11.gif",
-            alt: "Thirteenth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 434,
-            height: 650
-          },
-          {
-            src: "/productions/12.png",
-            highResSrc: "/productions/12.png",
-            alt: "Fourteenth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 434,
-            height: 650
-          },
-          {
-            src: "/productions/24.jpeg",
-            highResSrc: "/productions/24.jpeg",
-            alt: "Fifteenth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 940,
-            height: 627
-          },
-          {
-            type: "video" as const,
-            src: "/productions/8.png",
-            videoSrc: "/video/8.mp4",
-            alt: "Sixteenth Frame Production Video",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Video",
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/13.png",
-            highResSrc: "/productions/13.png",
-            alt: "Seventeenth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            type: "video" as const,
-            src: "/productions/1.png",
-            videoSrc: "/video/1.mp4",
-            alt: "Eighteenth Frame Production Video",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Video",
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/14.png",
-            highResSrc: "/productions/14.png",
-            alt: "Nineteenth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 433,
-            height: 650
-          },
-          {
-            src: "/productions/25.jpeg",
-            highResSrc: "/productions/25.jpeg",
-            alt: "Twentieth Frame Production",
-            photographer: "SIGNAL",
-            client: "STUDIO",
-            location: "London",
-            details: "AI Product Photography",
-            type: "image" as const,
-            forceShow: true,
-            width: 940,
-            height: 627
-          }
-        ];
+            details: mappedAsset?.details || "AI Production",
+            type: (mappedAsset?.type || "image") as "image" | "video",
+            forceShow: !!mappedAsset,
+            width: isLandscape ? 940 : 433,
+            height: isLandscape ? 627 : 650
+          };
+        });
 
         setDisplayImages(localImages);
       } catch (err) {

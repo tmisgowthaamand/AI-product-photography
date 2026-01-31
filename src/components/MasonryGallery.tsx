@@ -75,121 +75,13 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
 
   // Get frame dimensions based on category and index (1-indexed for user reference)
   const getFrameDimensions = (index: number) => {
-    const displayIndex = index + 1; // Convert to 1-indexed
+    const displayIndex = index + 1;
+    const isLandscape = [5, 10, 15, 20].includes(displayIndex);
 
-    // Commissioned category dimensions
-    if (category === 'commissioned') {
-      // 940 × 627 px: 1, 3, 6, 12, 13, 17, 18
-      if ([1, 3, 6, 12, 13, 17, 18].includes(displayIndex)) {
-        return { width: 940, height: 627 };
-      }
-      // 433 × 650 px: 2, 4, 5, 8, 14, 16
-      if ([2, 4, 5, 8, 14, 16].includes(displayIndex)) {
-        return { width: 433, height: 650 };
-      }
-      // 630 × 1200 px: 10, 11
-      if ([10, 11].includes(displayIndex)) {
-        return { width: 630, height: 1200 };
-      }
-      // 366 × 650 px: 7
-      if (displayIndex === 7) {
-        return { width: 366, height: 650 };
-      }
-      // 454 × 650 px: 9
-      if (displayIndex === 9) {
-        return { width: 454, height: 650 };
-      }
-      // 1200 × 630 px: 15, 20
-      if ([15, 20].includes(displayIndex)) {
-        return { width: 1200, height: 630 };
-      }
-      // 867 × 650 px: 19
-      if (displayIndex === 19) {
-        return { width: 867, height: 650 };
-      }
-      return { width: 433, height: 650 }; // Default for commissioned
+    if (isLandscape) {
+      return { width: 940, height: 627 }; // 3:2 ratio
     }
-
-    // Selected category dimensions (homepage)
-    if (category === 'selected') {
-      // 520 × 650 px: (None - changed to 2:3)
-      if ([].includes(displayIndex)) {
-        return { width: 520, height: 650 };
-      }
-      // 433 × 650 px: 1, 2, 3, 4, 8, 9, 11, 12, 16, 17, 18, 19
-      if ([1, 2, 3, 4, 8, 9, 11, 12, 16, 17, 18, 19].includes(displayIndex)) {
-        return { width: 433, height: 650 };
-      }
-      // 630 × 1200 px: (None - all changed to 3:2)
-      if ([].includes(displayIndex)) {
-        return { width: 630, height: 1200 };
-      }
-      // 940 × 627 px: 5, 10, 15, 20 (Landscape 3:2)
-      if ([5, 10, 15, 20].includes(displayIndex)) {
-        return { width: 940, height: 627 };
-      }
-      // 434 × 650 px: 6, 13, 14
-      if ([6, 13, 14].includes(displayIndex)) {
-        return { width: 434, height: 650 };
-      }
-      // 432 × 650 px: 7
-      if (displayIndex === 7) {
-        return { width: 432, height: 650 };
-      }
-      return { width: 433, height: 650 }; // Default for selected
-    }
-
-    // Editorial category dimensions
-    if (category === 'editorial') {
-      // 434 × 650 px: 1, 3, 4, 7, 9, 12, 14, 16
-      if ([1, 3, 4, 7, 9, 12, 14, 16].includes(displayIndex)) {
-        return { width: 434, height: 650 };
-      }
-      // 520 × 650 px: 2, 6, 8, 13, 17
-      if ([2, 6, 8, 13, 17].includes(displayIndex)) {
-        return { width: 520, height: 650 };
-      }
-      // 630 × 1200 px: 5
-      if (displayIndex === 5) {
-        return { width: 630, height: 1200 };
-      }
-      // 1200 × 630 px: 10, 15, 20
-      if ([10, 15, 20].includes(displayIndex)) {
-        return { width: 1200, height: 630 };
-      }
-      // 464 × 650 px: 11
-      if (displayIndex === 11) {
-        return { width: 464, height: 650 };
-      }
-      // 433 × 650 px: 18, 19
-      if ([18, 19].includes(displayIndex)) {
-        return { width: 433, height: 650 };
-      }
-      return { width: 434, height: 650 }; // Default for editorial
-    }
-
-    // Personal category dimensions
-    if (category === 'personal') {
-      // 940 × 627 px: 1, 3, 7, 12, 14
-      if ([1, 3, 7, 12, 14].includes(displayIndex)) {
-        return { width: 940, height: 627 };
-      }
-      // 433 × 650 px: 2, 4, 6, 8, 9, 11, 13, 16, 17, 18, 19
-      if ([2, 4, 6, 8, 9, 11, 13, 16, 17, 18, 19].includes(displayIndex)) {
-        return { width: 433, height: 650 };
-      }
-      // 1200 × 630 px: 5
-      if (displayIndex === 5) {
-        return { width: 1200, height: 630 };
-      }
-      // 630 × 1200 px: 10, 15, 20
-      if ([10, 15, 20].includes(displayIndex)) {
-        return { width: 630, height: 1200 };
-      }
-      return { width: 433, height: 650 }; // Default for personal
-    }
-
-    return { width: 433, height: 650 }; // Default
+    return { width: 433, height: 650 }; // 2:3 ratio
   };
 
   return (
@@ -197,53 +89,13 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
       <div className="gallery-hover-container text-center">
         {images.map((image, index) => {
           const frameDimensions = getFrameDimensions(index);
+          const isHovered = hoveredIndex === index;
 
-          // If showFrameOnly, render empty frame (unless forceShow is true)
-          if (showFrameOnly && !image.forceShow) {
-            return (
-              <button
-                key={index}
-                onClick={() => onImageClick(index)}
-                onMouseEnter={() => handleImageHover(index)}
-                onMouseLeave={handleImageLeave}
-                className="relative cursor-pointer gallery-image inline-block align-top p-1"
-                style={{ height: `${rowHeight}px` }}
-              >
-                <div
-                  className="relative h-full overflow-hidden transition-all duration-300 hover:border-gray-400 flex flex-col items-center justify-center p-4 text-center group"
-                  style={{
-                    width: `${(frameDimensions.width / frameDimensions.height) * rowHeight}px`,
-                    maxWidth: '100%',
-                    border: '1px solid #e5e5e5',
-                    backgroundColor: 'transparent'
-                  }}
-                >
-                  <div className="flex flex-col items-center gap-1.5 opacity-30 group-hover:opacity-60 transition-opacity duration-300">
-                    <span className="text-[9px] uppercase tracking-[0.3em] font-medium text-foreground">
-                      COMING SOON
-                    </span>
-                    <span className="text-[10px] font-playfair uppercase tracking-[0.15em] text-foreground/80 italic">
-                      I'M IN EDITING TABLE
-                    </span>
-                  </div>
-
-                  {/* Empty frame - maintains aspect ratio */}
-                  <svg
-                    width={frameDimensions.width}
-                    height={frameDimensions.height}
-                    viewBox={`0 0 ${frameDimensions.width} ${frameDimensions.height}`}
-                    className="absolute inset-0 h-full w-full pointer-events-none"
-                  >
-                    <rect
-                      width={frameDimensions.width}
-                      height={frameDimensions.height}
-                      fill="transparent"
-                    />
-                  </svg>
-                </div>
-              </button>
-            );
-          }
+          // Common frame style for the matted look
+          const frameInnerStyle = {
+            width: `${(frameDimensions.width / frameDimensions.height) * rowHeight}px`,
+            maxWidth: '100%',
+          };
 
           return (
             <button
@@ -251,117 +103,106 @@ const MasonryGallery = ({ images, onImageClick, showFrameOnly = false, category 
               onClick={() => onImageClick(index)}
               onMouseEnter={() => handleImageHover(index)}
               onMouseLeave={handleImageLeave}
-              className="relative cursor-zoom-in gallery-image inline-block align-top p-1"
+              className={`relative align-top p-2 transition-all duration-500 ease-out ${image.forceShow ? "cursor-zoom-in" : "cursor-default"
+                }`}
               style={{ height: `${rowHeight}px` }}
             >
               <div
-                className="relative h-full overflow-hidden"
-                style={{
-                  width: `${(frameDimensions.width / frameDimensions.height) * rowHeight}px`,
-                  maxWidth: '100%'
-                }}
+                className="relative h-full overflow-hidden bg-[#F9F9FB] border border-black/5 flex flex-col items-center justify-center p-[10px] transition-all duration-500"
+                style={frameInnerStyle}
               >
-                {image.type === "video" ? (
-                  // Video element with thumbnail poster
-                  <div className="relative h-full w-auto inline-block">
-                    {image.width && image.height && (
-                      <svg
-                        width={image.width}
-                        height={image.height}
-                        viewBox={`0 0 ${image.width} ${image.height}`}
-                        className="h-full w-auto"
-                      >
-                        <rect
-                          width={image.width}
-                          height={image.height}
-                          fill="white"
+                {/* Populate Content Area */}
+                <div className="relative w-full h-full overflow-hidden flex items-center justify-center bg-white shadow-[inset_0_2px_10px_rgba(0,0,0,0.03)] border border-black/[0.02]">
+                  {image.forceShow ? (
+                    <>
+                      {image.type === "video" ? (
+                        <video
+                          poster={image.src}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          onLoadedData={() => handleImageLoad(index)}
+                          className={`h-full w-full object-cover transition-all duration-700 ${hoveredIndex !== null && hoveredIndex !== index ? "grayscale opacity-80" : "scale-[1.02]"
+                            }`}
+                          style={{
+                            opacity: loadedImages.has(index) ? 1 : 0,
+                          }}
+                        >
+                          <source src={image.videoSrc} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          onLoad={() => handleImageLoad(index)}
+                          className={`h-full w-full object-cover transition-all duration-700 ${hoveredIndex !== null && hoveredIndex !== index ? "grayscale opacity-80" : "scale-[1.02]"
+                            }`}
+                          style={{
+                            opacity: loadedImages.has(index) ? 1 : 0,
+                          }}
+                          loading="lazy"
                         />
-                      </svg>
-                    )}
-                    <video
-                      poster={image.src}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      onLoadedData={() => handleImageLoad(index)}
-                      className={`absolute top-0 left-0 h-full w-auto object-contain transition-all duration-400 ${hoveredIndex !== null && hoveredIndex !== index
-                        ? "grayscale"
-                        : ""
-                        }`}
-                      style={{
-                        opacity: loadedImages.has(index) ? 1 : 0,
-                        transition: "opacity 0.5s ease-out",
-                      }}
-                    >
-                      <source src={image.videoSrc} type="video/mp4" />
-                    </video>
+                      )}
+
+                      {/* Gradient Overlay for Metadata readability if needed */}
+                      <div className={`absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${isHovered ? 'opacity-100' : ''}`} />
+                    </>
+                  ) : (
+                    /* Empty Frame Style */
+                    <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#F2F2F4]/50">
+                      {/* Technical Corner Accents inside the mat */}
+                      <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-black/10" />
+                      <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-black/10" />
+
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="text-[8px] uppercase tracking-[0.4em] font-medium text-black/25">
+                          COMING SOON
+                        </span>
+                        <span className="text-[10px] font-playfair uppercase tracking-[0.15em] text-black/30 italic">
+                          I'M IN EDITING TABLE
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Gallery Label Tag (Technical/Minimalist) */}
+                <div className="mt-2 w-full flex flex-col items-center">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[7px] uppercase tracking-[2px] font-bold text-black/30">
+                      SIGNAL STUDIO
+                    </span>
+                    <div className="h-[1px] w-6 bg-black/5" />
+                    <span className="text-[7px] uppercase tracking-[2px] font-bold text-black/30">
+                      {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                    </span>
                   </div>
-                ) : (
-                  // Image element with SVG placeholder
-                  <picture
-                    className={`inline-block h-full w-auto ${loadedImages.has(index) ? "show" : ""
-                      }`}
-                  >
-                    {image.width && image.height && (
-                      <svg
-                        width={image.width}
-                        height={image.height}
-                        viewBox={`0 0 ${image.width} ${image.height}`}
-                        className="h-full w-auto"
-                      >
-                        <rect
-                          width={image.width}
-                          height={image.height}
-                          fill="white"
-                        />
-                      </svg>
-                    )}
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      onLoad={() => handleImageLoad(index)}
-                      className={`absolute top-0 left-0 h-full w-auto object-contain transition-all duration-400 ${hoveredIndex !== null && hoveredIndex !== index
-                        ? "grayscale"
-                        : ""
-                        }`}
-                      style={{
-                        opacity: loadedImages.has(index) ? 1 : 0,
-                        transition: "opacity 0.5s ease-out",
-                      }}
-                      loading="lazy"
-                    />
-                  </picture>
-                )}
-                <ProgressiveBlur
-                  className="pointer-events-none absolute bottom-0 left-0 h-[80%] w-full"
-                  blurIntensity={0.6}
-                  animate={hoveredIndex === index ? "visible" : "hidden"}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1 },
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                />
-                {image.photographer && image.client && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 w-full pointer-events-none"
-                    animate={hoveredIndex === index ? "visible" : "hidden"}
-                    variants={{
-                      hidden: { opacity: 0 },
-                      visible: { opacity: 1 },
-                    }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
-                    <div className="flex flex-col items-center gap-0 px-4 py-3 text-center">
-                      <p className="text-base font-medium text-white">
-                        For {image.client}
-                      </p>
-                      <span className="text-xs text-white/90">
-                        Shot in {image.location}. {image.details}.
+
+                  {image.forceShow && (
+                    <div className="mt-1 flex flex-col items-center transition-all duration-500">
+                      <span className={`text-[9px] font-medium uppercase tracking-[0.05em] transition-colors duration-500 ${isHovered ? 'text-black/80' : 'text-black/50'}`}>
+                        {image.client}
+                      </span>
+                      <span className={`text-[8px] italic font-playfair transition-all duration-500 ${isHovered ? 'text-black/60 opacity-100 translate-y-0' : 'text-black/30 opacity-80'}`}>
+                        {image.details}
                       </span>
                     </div>
-                  </motion.div>
+                  )}
+                </div>
+
+                {/* Corner Accents on the outer frame */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-black/5" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-black/5" />
+
+                {/* Hover Lift Shadow */}
+                {isHovered && (
+                  <motion.div
+                    layoutId="hover-shadow"
+                    className="absolute inset-0 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] pointer-events-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  />
                 )}
               </div>
             </button>

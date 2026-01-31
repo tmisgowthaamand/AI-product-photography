@@ -32,151 +32,184 @@ const CategoryGallery = () => {
   const categoryUpper = category.toUpperCase();
 
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        // Stopped fetching Pexels media
-        // const data = await fetchMixedMedia(categoryUpper, page, 20);
-        const data = { items: [] };
+    const loadImages = () => {
+      setLoading(true);
+      setError(null);
 
-        // For commissioned category, insert local images at specific positions
-        if (categoryUpper === 'COMMISSIONED') {
-          const commissionedLocalAssets = [
-            { pos: 1, src: "/productions/51.jpeg", width: 940, height: 627 },
-            { pos: 2, type: "video" as const, src: "/productions/11.gif", videoSrc: "/video/11.mp4", width: 433, height: 650 },
-            { pos: 3, type: "video" as const, src: "/productions/17.png", videoSrc: "/video/17.mp4", width: 940, height: 627 },
-            { pos: 4, src: "/productions/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png", width: 433, height: 650 },
-            { pos: 6, src: "/productions/52.jpeg", width: 940, height: 627 },
-            { pos: 7, src: "/productions/7.png", width: 366, height: 650 },
-            { pos: 8, src: "/productions/15.png", width: 433, height: 650 },
-            { pos: 9, src: "/productions/16.webp", width: 454, height: 650 },
-            { pos: 11, type: "video" as const, src: "/productions/15.png", videoSrc: "/video/15.mp4", width: 630, height: 1200 },
-            { pos: 12, src: "/productions/53.jpeg", width: 940, height: 627 },
-            { pos: 14, src: "/productions/49.jpeg", width: 433, height: 650 },
-            { pos: 16, src: "/productions/50.jpeg", width: 433, height: 650 },
-            { pos: 17, src: "/productions/54.jpeg", width: 940, height: 627 }
-          ];
+      let items: any[] = [];
 
-          const items = Array.from({ length: 20 }, (_, i) => {
-            const pos = i + 1;
-            const asset = commissionedLocalAssets.find(a => a.pos === pos);
+      if (categoryUpper === 'COMMISSIONED') {
+        const commissionedAssetMap: Record<number, any> = {
+          1: { src: "/productions/16.webp", details: "ACCESSORIES DETAIL", client: "FASHION HOUSE" },
+          2: { src: "/productions/17.png", details: "INTERIOR CONCEPT", client: "MODERN LIVING" },
+          3: { src: "/productions/18.png", details: "MINIMALIST STUDY", client: "STUDIO A" },
+          4: { type: "video", src: "/productions/19.png", videoSrc: "/video/4.mp4", details: "ATMOSPHERIC MOTION", client: "DIGITAL JOURNAL" },
+          5: { src: "/productions/34.jpeg", details: "GALLERY VISIONS STUDY", client: "CURATED SERIES" },
+          6: { src: "/productions/19.png", details: "STYLE NARRATIVE", client: "HARPER'S BAZAAR" },
+          7: { src: "/productions/20.png", details: "HAUTE COUTURE STORY", client: "VOGUE FEATURE" },
+          8: { type: "video", src: "/productions/26.jpeg", videoSrc: "/video/5.mp4", details: "PORTRAIT MOTION", client: "CREATIVE FLOW" },
+          9: { src: "/productions/26.jpeg", details: "CLASSICAL PORTRAITURE", client: "PORTRAIT MASTER" },
+          10: { src: "/productions/35.jpeg", details: "URBAN TEXTURE STUDY", client: "INDUSTRIAL SUITE" },
+          11: { src: "/productions/27.jpeg", details: "CINEMATIC MOOD", client: "DIGITAL JOURNAL" },
+          12: { src: "/productions/28.jpeg", details: "COMPLEXION NARRATIVE", client: "BEAUTY MONTHLY" },
+          13: { src: "/productions/29.jpeg", details: "FAST FASHION STORY", client: "URBAN PULSE" },
+          14: { src: "/productions/30.jpeg", details: "STRUCTURAL FLOW", client: "ARCHITECTURE TODAY" },
+          15: { src: "/productions/38.jpeg", details: "GEOMETRICAL STUDY", client: "ABSTRACT SERIES" },
+          16: { src: "/productions/32.jpeg", details: "CULINARY ART", client: "CULINARY REVIEW" },
+          17: { src: "/productions/31.jpeg", details: "LUXURY LIVING", client: "LIFESTYLE CO" },
+          18: { src: "/productions/33.jpeg", details: "ALPS LANDSCAPE STUDY", client: "TRAVELER MEMOIRS" },
+          19: { type: "video", src: "/productions/33.jpeg", videoSrc: "/video/6.mp4", details: "Frozen Landscapes Study", client: "Traveler Memoirs" },
+          20: { type: "video", src: "/productions/35.jpeg", videoSrc: "/video/13.mp4", details: "Frozen Landscapes Study", client: "Traveler Memoirs" }
+        };
 
-            return {
-              src: asset?.src || "/placeholder.svg",
-              highResSrc: asset?.src || "/placeholder.svg",
-              videoSrc: asset?.videoSrc,
-              alt: "AI Product Production",
-              photographer: "SIGNAL",
-              client: "STUDIO",
-              location: "London",
-              details: asset?.videoSrc ? "AI Product Video" : "AI Product Photography",
-              type: asset?.type || ("image" as const),
-              forceShow: !!asset,
-              width: asset?.width || 433,
-              height: asset?.height || 650
-            };
-          });
+        const localAssets = Array.from({ length: 20 }, (_, i) => {
+          const pos = i + 1;
+          const isLandscape = [5, 10, 15, 20].includes(pos);
+          const mappedAsset = commissionedAssetMap[pos];
 
-          setImages(items as any[]);
-        } else if (categoryUpper === 'EDITORIAL') {
-        } else if (categoryUpper === 'EDITORIAL') {
-          const editorialLocalAssets = [
-            { pos: 1, src: "/productions/19.png", width: 434, height: 650 },
-            { pos: 3, src: "/productions/20.png", width: 434, height: 650 },
-            { pos: 4, src: "/productions/27.jpeg", width: 433, height: 650 },
-            { pos: 7, src: "/productions/5.png", videoSrc: "/video/5.mp4", type: "video" as const, width: 433, height: 650 },
-            { pos: 9, src: "/productions/6.png", videoSrc: "/video/6.mp4", type: "video" as const, width: 433, height: 650 },
-            { pos: 11, src: "/productions/28.jpeg", width: 433, height: 650 },
-            { pos: 14, src: "/productions/10.png", videoSrc: "/video/10.mp4", type: "video" as const, width: 433, height: 650 },
-            { pos: 16, src: "/productions/11.gif", videoSrc: "/video/11.mp4", type: "video" as const, width: 433, height: 650 },
-            { pos: 18, src: "/productions/29.jpeg", width: 433, height: 650 },
-            { pos: 19, src: "/productions/30.jpeg", width: 433, height: 650 },
-            { pos: 21, src: "/productions/31.jpeg", width: 433, height: 650 },
-            { pos: 22, src: "/productions/32.jpeg", width: 433, height: 650 },
-            { pos: 23, src: "/productions/33.jpeg", width: 433, height: 650 },
-            { pos: 24, src: "/productions/36.jpeg", width: 433, height: 650 },
-            { pos: 25, src: "/productions/37.jpeg", width: 433, height: 650 },
-            { pos: 26, src: "/productions/39.jpeg", width: 433, height: 650 },
-            { pos: 27, src: "/productions/40.jpeg", width: 433, height: 650 },
-            { pos: 28, src: "/productions/41.jpeg", width: 433, height: 650 },
-            { pos: 29, src: "/productions/42.jpeg", width: 433, height: 650 },
-            { pos: 31, src: "/productions/43.jpeg", width: 433, height: 650 },
-            { pos: 33, src: "/productions/44.jpeg", width: 433, height: 650 },
-            { pos: 35, src: "/productions/45.jpeg", width: 433, height: 650 },
-            { pos: 36, src: "/productions/46.jpeg", width: 433, height: 650 },
-            { pos: 37, src: "/productions/47.jpeg", width: 433, height: 650 },
-          ];
+          return {
+            pos,
+            src: mappedAsset?.src || "",
+            videoSrc: mappedAsset?.videoSrc,
+            alt: mappedAsset?.details || `Frame ${pos}`,
+            photographer: "SIGNAL",
+            client: mappedAsset?.client || "STUDIO",
+            location: "London",
+            details: mappedAsset?.details || "AI Production",
+            type: (mappedAsset?.type || "image") as "image" | "video",
+            forceShow: !!mappedAsset,
+            width: isLandscape ? 940 : 433,
+            height: isLandscape ? 627 : 650
+          };
+        });
 
-          const items = Array.from({ length: 40 }, (_, i) => {
-            const pos = i + 1;
-            const asset = editorialLocalAssets.find(a => a.pos === pos);
+        items = localAssets.map(asset => ({
+          src: asset.src,
+          highResSrc: asset.src,
+          videoSrc: asset.videoSrc,
+          alt: asset.alt,
+          photographer: asset.photographer,
+          client: asset.client,
+          location: asset.location,
+          details: asset.details,
+          type: asset.type,
+          forceShow: asset.forceShow,
+          width: asset.width,
+          height: asset.height
+        }));
+      } else if (categoryUpper === 'EDITORIAL') {
+        const editorialAssetMap: Record<number, any> = {
+          1: { src: "/productions/36.jpeg", details: "Post-Modern Motion Study", client: "Creative Flow" },
+          2: { src: "/productions/37.jpeg", details: "Tradition Reimagined", client: "Culture Weekly" },
+          3: { src: "/productions/39.jpeg", details: "Next-Gen Concept", client: "Futuristic Design" },
+          4: { type: "video", src: "/productions/36.jpeg", videoSrc: "/video/7.mp4", details: "Curated Visions Motion", client: "Gallery Series" },
+          5: { type: "video", src: "/productions/19.png", videoSrc: "/video/17.mp4", details: "Cinematic Mood Study", client: "Motion Lab" },
+          6: { type: "video", src: "/productions/1.png", videoSrc: "/video/8.mp4", details: "Studio Burger Lighting", client: "Gourmet Grill" },
+          7: { type: "video", src: "/productions/31.jpeg", videoSrc: "/video/10.mp4", details: "Lifestyle Co Narrative", client: "Lifestyle Co" },
+          8: { type: "video", src: "/productions/11.gif", videoSrc: "/video/11.mp4", details: "Majestic Alpha Study", client: "Wildlife Media" },
+          9: { type: "video", src: "/productions/32.jpeg", videoSrc: "/video/12.mp4", details: "Molecular Gastronomy", client: "Culinary Review" },
+          10: { src: "/productions/51.jpeg", details: "Velvet Chocolate Series", client: "Gourmet Desserts" },
+          11: { src: "/productions/20250507_1545_Luxury Editorial Model_simple_compose_01jtn3tg80emntnnqj50d9gy16.png", details: "Luxury Editorial Model", client: "Fashion House" },
+          12: { src: "/productions/40.jpeg", details: "Geometrical Narrative", client: "Abstract Form" },
+          13: { src: "/productions/41.jpeg", details: "Botanical Study", client: "Glass House" },
+          14: { src: "/productions/42.jpeg", details: "Shadow Play", client: "Dark Room" },
+          15: { src: "/productions/52.jpeg", details: "Fudge Brownie Macro", client: "Artisan Bakery" },
+          16: { src: "/productions/43.jpeg", details: "Industrial Site", client: "Urban Texture" },
+          17: { src: "/productions/44.jpeg", details: "Next-Gen Editorial", client: "Futuristic Design" },
+          18: { src: "/productions/45.jpeg", details: "Minimalist Aesthetic", client: "Studio Project" },
+          19: { src: "/productions/46.jpeg", details: "Creative Study", client: "Creative Suite" },
+          20: { src: "/productions/53.jpeg", details: "Cédre Royal Showcase", client: "Univerdesparfums" }
+        };
 
-            return {
-              src: asset?.src || "/placeholder.svg",
-              highResSrc: asset?.src || "/placeholder.svg",
-              videoSrc: asset?.videoSrc,
-              alt: "AI Product Production",
-              photographer: "SIGNAL",
-              client: "STUDIO",
-              location: "London",
-              details: asset?.videoSrc ? "AI Product Video" : "AI Product Photography",
-              type: asset?.type || ("image" as const),
-              forceShow: !!asset,
-              width: asset?.width || 433,
-              height: asset?.height || 650
-            };
-          });
+        const localAssets = Array.from({ length: 20 }, (_, i) => {
+          const pos = i + 1;
+          const isLandscape = [5, 10, 15, 20].includes(pos);
+          const mappedAsset = editorialAssetMap[pos];
 
-          setImages(items as any[]);
-        } else if (categoryUpper === 'PERSONAL') {
-          const personalLocalAssets = [
-            { pos: 1, type: "video" as const, src: "/productions/13.png", videoSrc: "/video/13.mp4", width: 940, height: 627 },
-            { pos: 2, src: "/productions/48.jpeg", width: 433, height: 650 },
-            { pos: 3, type: "video" as const, src: "/productions/14.png", videoSrc: "/video/14.mp4", width: 940, height: 627 },
-            { pos: 4, type: "video" as const, src: "/productions/19.png", videoSrc: "/video/19.mp4", width: 433, height: 650 },
-            { pos: 6, type: "video" as const, src: "/productions/20.png", videoSrc: "/video/20.mp4", width: 433, height: 650 },
-            { pos: 8, src: "/productions/55.jpeg", width: 433, height: 650 },
-          ];
+          return {
+            pos,
+            src: mappedAsset?.src || "",
+            videoSrc: mappedAsset?.videoSrc,
+            alt: mappedAsset?.details || `Frame ${pos}`,
+            photographer: "SIGNAL",
+            client: mappedAsset?.client || "STUDIO",
+            location: "London",
+            details: mappedAsset?.details || "AI Production",
+            type: (mappedAsset?.type || "image") as "image" | "video",
+            forceShow: !!mappedAsset,
+            width: isLandscape ? 940 : 433,
+            height: isLandscape ? 627 : 650
+          };
+        });
 
-          // Generate 20 units for the Personal gallery
-          const items = Array.from({ length: 20 }, (_, i) => {
-            const pos = i + 1;
-            const asset = personalLocalAssets.find(a => a.pos === pos);
+        items = localAssets.map(asset => ({
+          src: asset.src,
+          highResSrc: asset.src,
+          videoSrc: asset.videoSrc,
+          alt: asset.alt,
+          photographer: asset.photographer,
+          client: asset.client,
+          location: asset.location,
+          details: asset.details,
+          type: asset.type,
+          forceShow: asset.forceShow,
+          width: asset.width,
+          height: asset.height
+        }));
+      } else if (categoryUpper === 'PERSONAL') {
+        const personalAssetMap: Record<number, any> = {
+          1: { src: "/productions/47.jpeg", details: "Visions of Noir", client: "PERSONAL" },
+          2: { src: "/productions/48.jpeg", details: "Texture Exploration", client: "PERSONAL" },
+          3: { src: "/productions/49.jpeg", details: "Awareness Narrative", client: "PERSONAL" },
+          4: { src: "/productions/50.jpeg", details: "Ganache Study", client: "PERSONAL" },
+          5: { src: "/productions/54.jpeg", details: "Device Showcase", client: "PERSONAL" },
+          6: { src: "/productions/55.jpeg", details: "Shadow Study", client: "PERSONAL" },
+          7: { type: "video", src: "/productions/47.jpeg", videoSrc: "/video/15.mp4", details: "Light Motion Study", client: "PERSONAL" },
+          8: { type: "video", src: "/productions/48.jpeg", videoSrc: "/video/16.mp4", details: "Material Flow Study", client: "PERSONAL" },
+          9: { type: "video", src: "/productions/49.jpeg", videoSrc: "/video/19.mp4", details: "Atmospheric Pulse", client: "PERSONAL" },
+          11: { type: "video", src: "/productions/50.jpeg", videoSrc: "/video/20.mp4", details: "Form exploration", client: "PERSONAL" },
+          12: { type: "video", src: "/productions/55.jpeg", videoSrc: "/video/18.mp4", details: "Post-Modern Motion", client: "PERSONAL" }
+        };
 
-            // Default dimensions based on category logic
-            let width = 433;
-            let height = 650;
-            if ([1, 3, 7, 12, 14].includes(pos)) { width = 940; height = 627; }
-            else if (pos === 5) { width = 1200; height = 630; }
-            else if ([10, 15, 20].includes(pos)) { width = 630; height = 1200; }
+        const localAssets = Array.from({ length: 20 }, (_, i) => {
+          const pos = i + 1;
+          const isLandscape = [5, 10, 15, 20].includes(pos);
+          const mappedAsset = personalAssetMap[pos];
 
-            return {
-              src: asset?.src || "/placeholder.svg",
-              highResSrc: asset?.src || "/placeholder.svg",
-              videoSrc: asset?.videoSrc,
-              alt: "Studio Experiment",
-              photographer: "SIGNAL",
-              client: "STUDIO",
-              location: "London",
-              details: asset?.videoSrc ? "AI Product Video" : "AI Production Study",
-              type: asset?.type || ("image" as const),
-              forceShow: !!asset,
-              width: asset?.width || width,
-              height: asset?.height || height
-            };
-          });
+          return {
+            pos,
+            src: mappedAsset?.src || "",
+            videoSrc: mappedAsset?.videoSrc,
+            alt: mappedAsset?.details || `Frame ${pos}`,
+            photographer: "SIGNAL",
+            client: mappedAsset?.client || "STUDIO",
+            location: "London",
+            details: mappedAsset?.details || "AI Production",
+            type: (mappedAsset?.type || "image") as "image" | "video",
+            forceShow: !!mappedAsset,
+            width: isLandscape ? 940 : 433,
+            height: isLandscape ? 627 : 650
+          };
+        });
 
-          setImages(items as any[]);
-        } else {
-          setImages(data.items);
-        }
-      } catch (err) {
-        console.error('Error fetching Pexels media:', err);
-        setError('Failed to load images. Please try again later.');
-      } finally {
-        setLoading(false);
+        items = localAssets.map(asset => ({
+          src: asset.src,
+          highResSrc: asset.src,
+          videoSrc: asset.videoSrc,
+          alt: asset.alt,
+          photographer: asset.photographer,
+          client: asset.client,
+          location: asset.location,
+          details: asset.details,
+          type: asset.type,
+          forceShow: asset.forceShow,
+          width: asset.width,
+          height: asset.height
+        }));
       }
+
+      setImages(items as any[]);
+      setLoading(false);
     };
 
     loadImages();
